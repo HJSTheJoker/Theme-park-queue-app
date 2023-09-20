@@ -1,0 +1,85 @@
+
+<!DOCTYPE html>
+<html>
+<head>
+    <title>BeatTheQueue</title>
+    <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+</head>
+<body>
+
+<h1>Welcome to BeatTheQueue!</h1>
+<p>Powered by <a href="https://queue-times.com/">Queue-Times.com</a></p>
+
+<h2>Select Your Preferences:</h2>
+
+<!-- Park Selection -->
+<label for="parkSelect">Select Park:</label>
+<select id="parkSelect">
+    <!-- Parks will be populated here -->
+</select>
+
+<!-- Ride Selection -->
+<label for="rideSelect">Select Rides:</label>
+<select id="rideSelect" multiple>
+    <!-- Rides will be populated here -->
+</select>
+
+<!-- Max Wait Time -->
+<label for="maxWaitTime">Max Wait Time (minutes):</label>
+<input type="number" id="maxWaitTime" name="maxWaitTime" min="0" max="120">
+
+<button onclick="generateAlerts()">Generate Alerts</button>
+
+<script>
+// Function to fetch park list
+function fetchParkList() {
+  console.log('Fetching park list...');
+  // Fetch API data and populate the 'parkSelect' dropdown
+  // Add your API call logic here
+}
+
+// Function to fetch ride list based on selected park
+function fetchRideList(selectedPark) {
+  console.log('Fetching ride list for selected park:', selectedPark);
+  // Fetch API data for the selected park and populate the 'rideSelect' dropdown
+  // Add your API call logic here
+}
+
+// Function to fetch and parse ride data
+function fetchRideData(selectedPark, selectedRide) {
+  console.log('Fetching ride data for:', selectedPark, selectedRide);
+  // Fetch API data and parse JSON
+  // Add your API call logic here
+}
+
+// Function to collect user preferences
+function collectUserPreferences() {
+  console.log('Collecting user preferences...');
+  // Collect user input for wait time tolerance, etc.
+  // Add your logic here
+}
+
+// Function for trip planning algorithm
+function planTrip(userPreferences, rideData) {
+  console.log('Planning trip based on user preferences and ride data...');
+  // Generate trip plan based on user preferences and ride data
+  // Add your logic here
+}
+
+// Function for sending notifications
+function sendNotification(rideInfo) {
+  console.log('Sending notification based on ride info:', rideInfo);
+  // Send push notification based on ride info
+  // Add your logic here
+}
+
+// Main function to generate alerts
+function generateAlerts() {
+  console.log('Generating alerts...');
+  // Logic to generate alerts based on user preferences and real-time queue data
+  // Add your logic here
+}
+</script>
+
+</body>
+</html>
