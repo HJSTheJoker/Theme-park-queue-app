@@ -1,0 +1,71 @@
+
+<!DOCTYPE html>
+<html>
+<head>
+    <title>BeatTheQueue</title>
+    <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+</head>
+<body>
+
+<h1>Welcome to BeatTheQueue!</h1>
+<p>Powered by <a href="https://queue-times.com/">Queue-Times.com</a></p>
+
+<h2>Select Your Preferences:</h2>
+
+<!-- Park Selection -->
+<label for="parkSelect">Select Park:</label>
+<select id="parkSelect">
+    <!-- Parks will be populated here -->
+</select>
+
+<!-- Ride Selection -->
+<label for="rideSelect">Select Rides:</label>
+<select id="rideSelect" multiple>
+    <!-- Rides will be populated here -->
+</select>
+
+<!-- Max Wait Time -->
+<label for="maxWaitTime">Max Wait Time (minutes):</label>
+<input type="number" id="maxWaitTime" name="maxWaitTime" min="0" max="120">
+
+<button onclick="generateAlerts()">Generate Alerts</button>
+
+<script>
+// Function to fetch park list
+function fetchParkList() {
+  // Fetch API data and populate the 'parkSelect' dropdown
+}
+
+// Function to fetch ride list based on selected park
+function fetchRideList(selectedPark) {
+  // Fetch API data for the selected park and populate the 'rideSelect' dropdown
+}
+
+// Function to fetch and parse ride data
+function fetchRideData(selectedPark, selectedRide) {
+  // Fetch API data and parse JSON
+}
+
+// Function to collect user preferences
+function collectUserPreferences() {
+  // Collect user input for wait time tolerance, etc.
+}
+
+// Function for trip planning algorithm
+function planTrip(userPreferences, rideData) {
+  // Generate trip plan based on user preferences and ride data
+}
+
+// Function for sending notifications
+function sendNotification(rideInfo) {
+  // Send push notification based on ride info
+}
+
+// Main function to generate alerts
+function generateAlerts() {
+  // Logic to generate alerts based on user preferences and real-time queue data
+}
+</script>
+
+</body>
+</html>
