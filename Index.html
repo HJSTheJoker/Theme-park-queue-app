@@ -1,0 +1,71 @@
+
+<!DOCTYPE html>
+<html>
+<head>
+    <title>BeatTheQueue</title>
+    <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+</head>
+<body>
+
+<h1>Welcome to BeatTheQueue!</h1>
+<p>Powered by <a href="https://queue-times.com/">Queue-Times.com</a></p>
+
+<h2>Select Your Preferences:</h2>
+
+<!-- User Preferences -->
+<label for="rideSelect">Select Rides:</label>
+<select id="rideSelect" multiple>
+    <!-- Rides will be populated here -->
+</select>
+
+<label for="maxWaitTime">Max Wait Time (minutes):</label>
+<input type="number" id="maxWaitTime" name="maxWaitTime" min="0" max="120">
+
+<button onclick="generateAlerts()">Generate Alerts</button>
+
+<script>
+// Placeholder data structure received from the API
+const apiData = {
+    "lands": [
+        {
+            "id": 761,
+            "name": "Coasters",
+            "rides": [
+                {
+                    "id": 96,
+                    "name": "Colossus",
+                    "is_open": false,
+                    "wait_time": 0,
+                    "last_updated": "2023-09-20T13:36:51.000Z"
+                },
+                // ...
+            ]
+        },
+        // ...
+    ]
+};
+
+// Populate ride options
+apiData.lands.forEach(land => {
+    land.rides.forEach(ride => {
+        $("#rideSelect").append(new Option(ride.name, ride.id));
+    });
+});
+
+// Generate alerts based on user preferences
+function generateAlerts() {
+    const selectedRides = $("#rideSelect").val();
+    const maxWaitTime = $("#maxWaitTime").val();
+
+    apiData.lands.forEach(land => {
+        land.rides.forEach(ride => {
+            if (selectedRides.includes(String(ride.id)) && ride.is_open && ride.wait_time <= maxWaitTime) {
+                alert(`Time to go on ${ride.name}! Current wait time: ${ride.wait_time} minutes.`);
+            }
+        });
+    });
+}
+</script>
+
+</body>
+</html>
