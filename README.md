@@ -1,45 +1,34 @@
 
-# BeatTheQueue
+# BeatTheQueue Theme Park Trip Planner
 
-This repository contains the code for BeatTheQueue, a web-based service designed to help you beat the queues at theme parks. 
-The service allows users to select a theme park, preferred rides, and maximum wait time.
-It then provides real-time alerts based on queue times for the selected rides.
+## Overview
+This project aims to create a Theme Park Trip Planner that provides real-time queue time alerts for theme park rides. The service is powered by Queue-Times.com.
 
-## How to Use
+## Features
 
-1. Open the `theme_park_trip_planner_complete_with_api_calls.html` file in a web browser.
-2. Select your preferences and click the "Generate Alerts" button.
-3. Receive real-time alerts based on your selected preferences and real-time queue data.
+### 1. Park Selection
+- **Objective**: Fetch a list of available parks from the API and display them in a dropdown.
 
-## Acknowledgment
+### 2. Ride Selection
+- **Objective**: Once a park is selected, fetch the list of rides for that park and display them in a separate dropdown.
 
-Powered by [Queue-Times.com](https://queue-times.com/)
+### 3. Data Collection
+- **Objective**: Fetch and parse data from the queue-times API for the selected park and ride.
 
-## Outline for BeatTheQueue
+### 4. User Preferences
+- **Objective**: Collect user preferences like tolerance for wait times.
 
-### Core Features
+### 5. Trip Planning Algorithm
+- **Objective**: Use user preferences and API data to generate an optimized trip plan.
 
-1. **Data Collection**
-    - Fetch data from the queue-times API.
-    - Parse the JSON data to get ride details like name, wait time, and status (open/closed).
-
-2. **User Preferences**
-    - Ask the user for their preferences, such as favorite rides, tolerance for wait times, etc.
-
-3. **Trip Planning Algorithm**
-    - Use the user's preferences and the API data to generate an optimized trip plan.
-
-4. **Notifications**
-    - Implement a system to send push notifications for ride wait times and status changes.
+### 6. Notifications
+- **Objective**: Implement a system to send push notifications for ride wait times and status changes.
 
 ### Future Features
+- Flight Deals: Integrate with Skyscanner or Google Flights API to notify users of flight deals.
+- Best Times to Visit: Analyze historical data to suggest the best times to visit.
 
-5. **Flight Deals**
-    - Integrate with Skyscanner or Google Flights API to notify users of flight deals to the theme parks they are interested in.
+## Pseudo-code
 
-6. **Best Times to Visit**
-    - Analyze historical data to suggest the best times to visit.
-
-7. **iOS App**
-    - Wrap all these features into an iOS app.
+You can find pseudo-code snippets for each feature in the HTML file under the script tag.
 
