@@ -1,0 +1,91 @@
+
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>BeatTheQueue - Theme Park Trip Planner</title>
+    <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+</head>
+<body>
+
+    <h1>Theme Park Trip Planner</h1>
+    <p>Powered by <a href="https://queue-times.com/" target="_blank">Queue-Times.com</a></p>
+    
+    <!-- Park Selection -->
+    <label for="parkSelect">Select Park:</label>
+    <select id="parkSelect"></select>
+    
+    <!-- Ride Selection -->
+    <label for="rideSelect">Select Ride:</label>
+    <select id="rideSelect"></select>
+    
+    <!-- Max Wait Time -->
+    <label for="maxWaitTime">Max Wait Time:</label>
+    <input type="number" id="maxWaitTime">
+    
+    <!-- Generate Alerts Button -->
+    <button onclick="generateAlerts()">Generate Alerts</button>
+
+    <script>
+        // Debug API Calls
+        function fetchParkList() {
+            console.log('Fetching park list...');
+            $.getJSON("https://queue-times.com/parks.json", function(data) {
+                console.log('Received park list:', data);
+                // Populate the 'parkSelect' dropdown
+                data.forEach(function(group) {
+                    group.parks.forEach(function(park) {
+                        $('#parkSelect').append($('<option>', {
+                            value: park.id,
+                            text: park.name
+                        }));
+                    });
+                });
+            }).fail(function(jqXHR, textStatus, errorThrown) {
+                console.log('API call failed:', textStatus, errorThrown);
+            });
+        }
+        
+        // Check CORS
+        $(document).ajaxError(function(event, jqxhr, settings, thrownError) {
+            if (jqxhr.status === 0) {
+                console.log('CORS issue detected');
+            }
+        });
+
+        // Fetch Ride List
+        function fetchRideList(selectedPark) {
+            console.log('Fetching ride list for selected park:', selectedPark);
+            $.getJSON("https://queue-times.com/parks/" + selectedPark + "/queue_times.json", function(data) {
+                console.log('Received ride list:', data);
+                // Populate the 'rideSelect' dropdown
+                if (data && data.lands && Array.isArray(data.lands)) {
+                    data.lands.forEach(function(land) {
+                        land.rides.forEach(function(ride) {
+                            $('#rideSelect').append($('<option>', {
+                                value: ride.id,
+                                text: ride.name
+                            }));
+                        });
+                    });
+                } else {
+                    console.log('Unexpected data structure:', data);
+                }
+            }).fail(function(jqXHR, textStatus, errorThrown) {
+                console.log('API call failed:', textStatus, errorThrown);
+            });
+        }
+
+        // Initialize Functions
+        console.log('Initializing functions...');
+        fetchParkList();
+        fetchRideList();
+
+        // Generate Alerts (placeholder)
+        function generateAlerts() {
+            console.log('Generating alerts...');
+            // Placeholder for your logic
+        }
+    </script>
+</body>
+</html>
