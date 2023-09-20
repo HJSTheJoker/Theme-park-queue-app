@@ -12,58 +12,58 @@
 
 <h2>Select Your Preferences:</h2>
 
-<!-- User Preferences -->
+<!-- Park Selection -->
+<label for="parkSelect">Select Park:</label>
+<select id="parkSelect">
+    <!-- Parks will be populated here -->
+</select>
+
+<!-- Ride Selection -->
 <label for="rideSelect">Select Rides:</label>
 <select id="rideSelect" multiple>
     <!-- Rides will be populated here -->
 </select>
 
+<!-- Max Wait Time -->
 <label for="maxWaitTime">Max Wait Time (minutes):</label>
 <input type="number" id="maxWaitTime" name="maxWaitTime" min="0" max="120">
 
 <button onclick="generateAlerts()">Generate Alerts</button>
 
 <script>
-// Placeholder data structure received from the API
-const apiData = {
-    "lands": [
-        {
-            "id": 761,
-            "name": "Coasters",
-            "rides": [
-                {
-                    "id": 96,
-                    "name": "Colossus",
-                    "is_open": false,
-                    "wait_time": 0,
-                    "last_updated": "2023-09-20T13:36:51.000Z"
-                },
-                // ...
-            ]
-        },
-        // ...
-    ]
-};
+// Function to fetch park list
+function fetchParkList() {
+  // Fetch API data and populate the 'parkSelect' dropdown
+}
 
-// Populate ride options
-apiData.lands.forEach(land => {
-    land.rides.forEach(ride => {
-        $("#rideSelect").append(new Option(ride.name, ride.id));
-    });
-});
+// Function to fetch ride list based on selected park
+function fetchRideList(selectedPark) {
+  // Fetch API data for the selected park and populate the 'rideSelect' dropdown
+}
 
-// Generate alerts based on user preferences
+// Function to fetch and parse ride data
+function fetchRideData(selectedPark, selectedRide) {
+  // Fetch API data and parse JSON
+}
+
+// Function to collect user preferences
+function collectUserPreferences() {
+  // Collect user input for wait time tolerance, etc.
+}
+
+// Function for trip planning algorithm
+function planTrip(userPreferences, rideData) {
+  // Generate trip plan based on user preferences and ride data
+}
+
+// Function for sending notifications
+function sendNotification(rideInfo) {
+  // Send push notification based on ride info
+}
+
+// Main function to generate alerts
 function generateAlerts() {
-    const selectedRides = $("#rideSelect").val();
-    const maxWaitTime = $("#maxWaitTime").val();
-
-    apiData.lands.forEach(land => {
-        land.rides.forEach(ride => {
-            if (selectedRides.includes(String(ride.id)) && ride.is_open && ride.wait_time <= maxWaitTime) {
-                alert(`Time to go on ${ride.name}! Current wait time: ${ride.wait_time} minutes.`);
-            }
-        });
-    });
+  // Logic to generate alerts based on user preferences and real-time queue data
 }
 </script>
 
