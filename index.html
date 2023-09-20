@@ -34,51 +34,68 @@
 // Function to fetch park list
 function fetchParkList() {
   console.log('Fetching park list...');
-  // Fetch API data and populate the 'parkSelect' dropdown
-  // Add your API call logic here
+  $.getJSON("https://queue-times.com/parks/2/queue_times.json", function(data) {
+    // Populate the 'parkSelect' dropdown
+    data.lands.forEach(function(land) {
+      $('#parkSelect').append($('<option>', {
+        value: land.id,
+        text: land.name
+      }));
+    });
+  });
 }
 
 // Function to fetch ride list based on selected park
 function fetchRideList(selectedPark) {
   console.log('Fetching ride list for selected park:', selectedPark);
-  // Fetch API data for the selected park and populate the 'rideSelect' dropdown
-  // Add your API call logic here
+  $.getJSON("https://queue-times.com/parks/2/queue_times.json", function(data) {
+    // Populate the 'rideSelect' dropdown
+    data.lands.forEach(function(land) {
+      land.rides.forEach(function(ride) {
+        $('#rideSelect').append($('<option>', {
+          value: ride.id,
+          text: ride.name
+        }));
+      });
+    });
+  });
 }
 
 // Function to fetch and parse ride data
 function fetchRideData(selectedPark, selectedRide) {
   console.log('Fetching ride data for:', selectedPark, selectedRide);
-  // Fetch API data and parse JSON
-  // Add your API call logic here
+  // Here we're using the same API endpoint, as we don't have individual ride endpoints
+  $.getJSON("https://queue-times.com/parks/2/queue_times.json", function(data) {
+    // Process the ride data
+    const ride = data.lands.find(land => land.id === selectedPark).rides.find(r => r.id === selectedRide);
+    console.log("Queue time for the ride:", ride.wait_time);
+  });
 }
 
 // Function to collect user preferences
 function collectUserPreferences() {
   console.log('Collecting user preferences...');
-  // Collect user input for wait time tolerance, etc.
-  // Add your logic here
+  const maxWaitTime = $('#maxWaitTime').val();
 }
 
 // Function for trip planning algorithm
 function planTrip(userPreferences, rideData) {
   console.log('Planning trip based on user preferences and ride data...');
-  // Generate trip plan based on user preferences and ride data
-  // Add your logic here
 }
 
 // Function for sending notifications
 function sendNotification(rideInfo) {
   console.log('Sending notification based on ride info:', rideInfo);
-  // Send push notification based on ride info
-  // Add your logic here
 }
 
 // Main function to generate alerts
 function generateAlerts() {
   console.log('Generating alerts...');
-  // Logic to generate alerts based on user preferences and real-time queue data
-  // Add your logic here
 }
+
+// Fetch initial park and ride list
+fetchParkList();
+fetchRideList();
 </script>
 
 </body>
