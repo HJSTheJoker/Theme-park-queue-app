@@ -1,102 +1,91 @@
 
 <!DOCTYPE html>
-<html>
+<html lang="en">
 <head>
-    <title>BeatTheQueue</title>
+    <meta charset="UTF-8">
+    <title>BeatTheQueue - Theme Park Trip Planner</title>
     <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
 </head>
 <body>
 
-<h1>Welcome to BeatTheQueue!</h1>
-<p>Powered by <a href="https://queue-times.com/">Queue-Times.com</a></p>
+    <h1>Theme Park Trip Planner</h1>
+    <p>Powered by <a href="https://queue-times.com/" target="_blank">Queue-Times.com</a></p>
+    
+    <!-- Park Selection -->
+    <label for="parkSelect">Select Park:</label>
+    <select id="parkSelect"></select>
+    
+    <!-- Ride Selection -->
+    <label for="rideSelect">Select Ride:</label>
+    <select id="rideSelect"></select>
+    
+    <!-- Max Wait Time -->
+    <label for="maxWaitTime">Max Wait Time:</label>
+    <input type="number" id="maxWaitTime">
+    
+    <!-- Generate Alerts Button -->
+    <button onclick="generateAlerts()">Generate Alerts</button>
 
-<h2>Select Your Preferences:</h2>
+    <script>
+        // Debug API Calls
+        function fetchParkList() {
+            console.log('Fetching park list...');
+            $.getJSON("https://queue-times.com/parks.json", function(data) {
+                console.log('Received park list:', data);
+                // Populate the 'parkSelect' dropdown
+                data.forEach(function(group) {
+                    group.parks.forEach(function(park) {
+                        $('#parkSelect').append($('<option>', {
+                            value: park.id,
+                            text: park.name
+                        }));
+                    });
+                });
+            }).fail(function(jqXHR, textStatus, errorThrown) {
+                console.log('API call failed:', textStatus, errorThrown);
+            });
+        }
+        
+        // Check CORS
+        $(document).ajaxError(function(event, jqxhr, settings, thrownError) {
+            if (jqxhr.status === 0) {
+                console.log('CORS issue detected');
+            }
+        });
 
-<!-- Park Selection -->
-<label for="parkSelect">Select Park:</label>
-<select id="parkSelect">
-    <!-- Parks will be populated here -->
-</select>
+        // Fetch Ride List
+        function fetchRideList(selectedPark) {
+            console.log('Fetching ride list for selected park:', selectedPark);
+            $.getJSON("https://queue-times.com/parks/" + selectedPark + "/queue_times.json", function(data) {
+                console.log('Received ride list:', data);
+                // Populate the 'rideSelect' dropdown
+                if (data && data.lands && Array.isArray(data.lands)) {
+                    data.lands.forEach(function(land) {
+                        land.rides.forEach(function(ride) {
+                            $('#rideSelect').append($('<option>', {
+                                value: ride.id,
+                                text: ride.name
+                            }));
+                        });
+                    });
+                } else {
+                    console.log('Unexpected data structure:', data);
+                }
+            }).fail(function(jqXHR, textStatus, errorThrown) {
+                console.log('API call failed:', textStatus, errorThrown);
+            });
+        }
 
-<!-- Ride Selection -->
-<label for="rideSelect">Select Rides:</label>
-<select id="rideSelect" multiple>
-    <!-- Rides will be populated here -->
-</select>
+        // Initialize Functions
+        console.log('Initializing functions...');
+        fetchParkList();
+        fetchRideList();
 
-<!-- Max Wait Time -->
-<label for="maxWaitTime">Max Wait Time (minutes):</label>
-<input type="number" id="maxWaitTime" name="maxWaitTime" min="0" max="120">
-
-<button onclick="generateAlerts()">Generate Alerts</button>
-
-<script>
-// Function to fetch park list
-function fetchParkList() {
-  console.log('Fetching park list...');
-  $.getJSON("https://queue-times.com/parks/2/queue_times.json", function(data) {
-    // Populate the 'parkSelect' dropdown
-    data.lands.forEach(function(land) {
-      $('#parkSelect').append($('<option>', {
-        value: land.id,
-        text: land.name
-      }));
-    });
-  });
-}
-
-// Function to fetch ride list based on selected park
-function fetchRideList(selectedPark) {
-  console.log('Fetching ride list for selected park:', selectedPark);
-  $.getJSON("https://queue-times.com/parks/2/queue_times.json", function(data) {
-    // Populate the 'rideSelect' dropdown
-    data.lands.forEach(function(land) {
-      land.rides.forEach(function(ride) {
-        $('#rideSelect').append($('<option>', {
-          value: ride.id,
-          text: ride.name
-        }));
-      });
-    });
-  });
-}
-
-// Function to fetch and parse ride data
-function fetchRideData(selectedPark, selectedRide) {
-  console.log('Fetching ride data for:', selectedPark, selectedRide);
-  // Here we're using the same API endpoint, as we don't have individual ride endpoints
-  $.getJSON("https://queue-times.com/parks/2/queue_times.json", function(data) {
-    // Process the ride data
-    const ride = data.lands.find(land => land.id === selectedPark).rides.find(r => r.id === selectedRide);
-    console.log("Queue time for the ride:", ride.wait_time);
-  });
-}
-
-// Function to collect user preferences
-function collectUserPreferences() {
-  console.log('Collecting user preferences...');
-  const maxWaitTime = $('#maxWaitTime').val();
-}
-
-// Function for trip planning algorithm
-function planTrip(userPreferences, rideData) {
-  console.log('Planning trip based on user preferences and ride data...');
-}
-
-// Function for sending notifications
-function sendNotification(rideInfo) {
-  console.log('Sending notification based on ride info:', rideInfo);
-}
-
-// Main function to generate alerts
-function generateAlerts() {
-  console.log('Generating alerts...');
-}
-
-// Fetch initial park and ride list
-fetchParkList();
-fetchRideList();
-</script>
-
+        // Generate Alerts (placeholder)
+        function generateAlerts() {
+            console.log('Generating alerts...');
+            // Placeholder for your logic
+        }
+    </script>
 </body>
 </html>
