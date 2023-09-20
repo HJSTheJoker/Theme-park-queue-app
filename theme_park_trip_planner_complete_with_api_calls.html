@@ -1,0 +1,131 @@
+
+<!DOCTYPE html>
+<html>
+<head>
+    <title>Theme Park Trip Planner</title>
+</head>
+<body>
+
+    <h1>Theme Park Trip Planner</h1>
+
+    <!-- Section for Theme Park Selection -->
+    <div id="themeParkSelection">
+        <label for="themePark">Select Theme Park:</label>
+        <select id="themePark">
+            <!-- Options will be populated dynamically -->
+        </select>
+    </div>
+
+    <!-- Section for Ride Preferences -->
+    <div id="ridePreferences">
+        <label for="rides">Select Preferred Rides:</label>
+        <select id="rides" multiple>
+            <!-- Options will be populated dynamically -->
+        </select>
+    </div>
+
+    <!-- Section for Max Wait Time -->
+    <div id="maxWaitTime">
+        <label for="waitTime">Max Wait Time (minutes):</label>
+        <input type="number" id="waitTime" name="waitTime">
+    </div>
+
+    <!-- Button to Generate Alerts -->
+    <button id="generateAlerts">Generate Alerts</button>
+
+    <!-- Section to Display Alerts -->
+    <div id="alerts">
+        <!-- Alerts will be displayed here -->
+    </div>
+
+
+<script>
+
+    // Simulated API data for theme parks and rides
+    const themeParkData = {
+        "name": "Example Theme Park",
+        "rides": [
+            {"id": 1, "name": "Roller Coaster", "is_open": true, "wait_time": 15},
+            {"id": 2, "name": "Ferris Wheel", "is_open": true, "wait_time": 5},
+            {"id": 3, "name": "Haunted House", "is_open": false, "wait_time": 0}
+        ]
+    };
+
+    // Function to populate theme park options
+    function populateThemeParkOptions() {
+        const themeParkSelect = document.getElementById("themePark");
+        const option = document.createElement("option");
+        option.value = themeParkData.name;
+        option.text = themeParkData.name;
+        themeParkSelect.appendChild(option);
+    }
+
+    // Function to populate ride options
+    function populateRideOptions() {
+        const rideSelect = document.getElementById("rides");
+        themeParkData.rides.forEach(ride => {
+            const option = document.createElement("option");
+            option.value = ride.name;
+            option.text = ride.name;
+            rideSelect.appendChild(option);
+        });
+    }
+
+    // Function to generate alerts based on user preferences and theme park data
+    function generateAlerts() {
+        const selectedThemePark = document.getElementById("themePark").value;
+        const selectedRides = Array.from(document.getElementById("rides").selectedOptions).map(option => option.value);
+        const maxWaitTime = parseInt(document.getElementById("waitTime").value);
+
+        const alertsDiv = document.getElementById("alerts");
+        alertsDiv.innerHTML = "";
+
+        if (themeParkData.name === selectedThemePark) {
+            themeParkData.rides.forEach(ride => {
+                if (selectedRides.includes(ride.name) && ride.is_open && ride.wait_time <= maxWaitTime) {
+                    const alertMessage = `Good time to go on ${ride.name}! Current wait time is ${ride.wait_time} minutes.`;
+                    const alertDiv = document.createElement("div");
+                    alertDiv.textContent = alertMessage;
+                    alertsDiv.appendChild(alertDiv);
+                }
+            });
+        }
+    }
+
+    // Initialize the options when the page loads
+    
+// Function to fetch real-time queue data from the Queue Times API
+async function fetchRealTimeData() {
+    const response = await fetch('https://queue-times.com/parks/2/queue_times.json');
+    if (response.ok) {
+        const data = await response.json();
+        // Replace the simulated themeParkData with this real data
+        // For demonstration, we'll assume 'data' has the same structure as themeParkData
+        themeParkData = data;
+        populateThemeParkOptions();
+        populateRideOptions();
+    } else {
+        console.log("API fetch failed: " + response.status);
+    }
+}
+
+// Call the function to fetch data when the page loads
+window.onload = function() {
+    fetchRealTimeData();
+};
+window.onload = function() {
+        populateThemeParkOptions();
+        populateRideOptions();
+    };
+
+    // Attach the generateAlerts function to the button
+    document.getElementById("generateAlerts").addEventListener("click", generateAlerts);
+
+</script>
+
+    <!-- Footer to Display Required Message and Link -->
+    <footer>
+        <p>Powered by <a href="https://queue-times.com/" target="_blank">Queue-Times.com</a></p>
+    </footer>
+</body>
+</html>
