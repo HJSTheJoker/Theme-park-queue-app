@@ -5,6 +5,22 @@
     <meta charset="UTF-8">
     <title>BeatTheQueue - Theme Park Trip Planner</title>
     <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+<script>
+const proxyUrl = 'https://cors-anywhere.herokuapp.com/';
+
+const parkListUrl = "https://queue-times.com/parks.json";
+$.getJSON(proxyUrl + parkListUrl, function(data) {
+  // Your existing code for handling park list data
+});
+
+
+const queueTimesUrl = "https://queue-times.com/parks/2/queue_times.json";
+$.getJSON(proxyUrl + queueTimesUrl, function(data) {
+  // Your existing code for handling queue times data
+});
+
+</script>
+
 </head>
 <body>
 
